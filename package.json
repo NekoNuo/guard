@@ -1,0 +1,29 @@
+{
+  "name": "@magpie-community/middleware-guard",
+  "version": "0.7.1",
+  "description": "Serves only the clients you name: magpie gateway middleware that turns a request away by agent, model and provider, with a page to edit the lists",
+  "type": "module",
+  "files": ["guard.gateway.js", "page", "assets", "README.md", "README.en.md"],
+  "keywords": ["magpie", "magpie-middleware", "magpie-page", "allowlist", "blocklist", "claude-code", "codex", "llm-gateway"],
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/magpie-community/plugins.git", "directory": "packages/guard" },
+  "magpie": {
+    "middleware": "./guard.gateway.js",
+    "page": {
+      "title": "Client guard",
+      "titles": { "zh": "客户端白名单", "zh-TW": "客戶端白名單" },
+      "file": "page/index.html",
+      "icon": "page/icon.svg"
+    },
+    "permissions": ["providers:list"],
+    "options": {
+      "allow": ["claude-code", "codex"],
+      "block": ["cursor", "other"],
+      "providerAllow": ["relay-a", "relay-b"],
+      "providerBlock": ["relay-c"],
+      "byModel": [{ "match": ["claude-*", "gpt-5*"], "allow": ["claude-code", "codex"], "block": ["cursor"] }],
+      "byProvider": [{ "match": ["relay-a"], "allow": ["claude-code"], "block": ["other"] }],
+      "maxLog": 6
+    }
+  }
+}

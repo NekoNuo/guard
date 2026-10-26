@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client guard</title>
+<link rel="stylesheet" href="style.css">
+<script src="_magpie/bridge.js"></script>
+<script src="view.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.8 19.5 5.4v6.1c0 4.6-3.1 8.4-7.5 10.2C7.6 19.9 4.5 16.1 4.5 11.5V5.4z"/>
+        <path d="m8.7 11.9 2.3 2.3 4.4-4.6"/>
+      </svg>
+    </span>
+    <div class="brand-text">
+      <h1 data-t="title">Client guard</h1>
+      <p class="sub" data-t="subtitle"></p>
+    </div>
+  </div>
+  <div class="actions">
+    <span id="status" class="status" role="status" aria-live="polite"></span>
+    <button type="button" id="save" class="primary" disabled><span data-t="save">Save</span></button>
+  </div>
+</header>
+
+<main>
+  <section class="summary" aria-label="policy">
+    <div class="stat">
+      <span class="stat-n" id="statAllow">0</span>
+      <span class="stat-k" data-t="statAllow">allowed</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n" id="statBlock">0</span>
+      <span class="stat-k" data-t="statBlock">blocked</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n" id="statModels">0</span>
+      <span class="stat-k" data-t="statModels">model rules</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n" id="statProviders">0</span>
+      <span class="stat-k" data-t="statProviders">provider rules</span>
+    </div>
+  </section>
+
+  <div class="pair">
+    <section class="card">
+      <div class="card-head">
+        <h2><i class="dot ok"></i><span data-t="allowTitle">Allowed clients</span></h2>
+      </div>
+      <p class="hint" data-t="allowHint"></p>
+      <div class="chips" id="allowChips"></div>
+      <div class="adder">
+        <input type="text" id="allowInput" autocomplete="off" spellcheck="false">
+        <button type="button" id="allowAdd" class="quiet" data-t="add">Add</button>
+      </div>
+      <div class="suggest" id="allowSuggest"></div>
+      <p class="warn" id="allowWarn" hidden></p>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2><i class="dot no"></i><span data-t="blockTitle">Blocked clients</span></h2>
+      </div>
+      <p class="hint" data-t="blockHint"></p>
+      <div class="chips" id="blockChips"></div>
+      <div class="adder">
+        <input type="text" id="blockInput" autocomplete="off" spellcheck="false">
+        <button type="button" id="blockAdd" class="quiet" data-t="add">Add</button>
+      </div>
+      <div class="suggest" id="blockSuggest"></div>
+    </section>
+  </div>
+
+  <p class="note inline-note" id="clientsNote"></p>
+
+  <section class="card">
+    <div class="card-head">
+      <h2><i class="dot provider"></i><span data-t="providerListsTitle">Providers</span></h2>
+    </div>
+    <p class="hint" data-t="providerListsHint"></p>
+    <div class="pair inner">
+      <div class="fld" id="providerAllowBox"></div>
+      <div class="fld" id="providerBlockBox"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2><i class="dot model"></i><span data-t="byModelTitle">Per-model rules</span></h2>
+      <button type="button" id="ruleAdd" class="ghost">+ <span data-t="addRule">Add rule</span></button>
+    </div>
+    <p class="hint" data-t="byModelHint"></p>
+    <div id="rules" class="rules"></div>
+    <p class="empty" id="rulesEmpty" hidden></p>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2><i class="dot provider"></i><span data-t="byProviderTitle">Per-provider rules</span></h2>
+      <button type="button" id="providerAdd" class="ghost">+ <span data-t="addRule">Add rule</span></button>
+    </div>
+    <p class="hint" data-t="byProviderHint"></p>
+    <div id="providerRules" class="rules"></div>
+    <p class="empty" id="providersEmpty" hidden></p>
+    <p class="hint providers-note" id="providersNote"></p>
+  </section>
+
+  <details class="json">
+    <summary><span data-t="jsonTitle">Options as JSON</span></summary>
+    <pre id="json"></pre>
+  </details>
+
+  <p class="note" id="note"></p>
+  <p class="error" id="error" hidden></p>
+</main>
+</body>
+</html>
